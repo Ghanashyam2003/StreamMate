@@ -6,6 +6,8 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import { connectTosocket } from "./controllers/socketManger.js";
 import userRoutes from "./routes/user.routes.js";
+import crypto from "crypto";
+
 
 // Load environment variables
 dotenv.config();
