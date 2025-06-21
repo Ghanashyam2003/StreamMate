@@ -5,6 +5,7 @@ import cors from "cors";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import { connectTosocket } from "./controllers/socketManger.js";
+import userRoutes from "./routes/user.routes.js";
 
 // Load environment variables
 dotenv.config();
@@ -17,6 +18,10 @@ const io = connectTosocket(server);
 app.use(cors());
 app.use(express.json({limit: '50mb'}));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
+app.use("/api/v1/user", userRoutes);
+
+
+
 
 // Environment-based configuration
 const PORT = process.env.PORT || 3000;
