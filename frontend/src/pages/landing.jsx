@@ -1,7 +1,39 @@
 import React from 'react'
+import "../App.css"
+import { Link, useNavigate } from 'react-router-dom'
+export default function LandingPage() {
 
-export default function landingPage() {
-  return (
-    <div>LandingPage</div>
-  )
+
+    const router = useNavigate();
+
+    return (
+        <div className="landingPageContainer">
+            <nav>
+                <div className="navHeader">
+                    <h2>STREAMMATE</h2>
+                </div>
+                <div className="navlist">
+                    <p onClick={() => router("/aljk23")}>Guest</p>
+                    <p onClick={() => router("/auth")}>Register</p>
+                    <div onClick={() => router("/auth")} role="button">
+                        <p>Login</p>
+                    </div>
+                </div>
+            </nav>
+            <div className="landingMainContainer">
+                <div>
+                    <h1>
+                        <span style={{ color: "#FF9839" }}>Connect</span> instantly
+                    </h1>
+                    <p>Video call, message, and share with one click. No downloads.</p>
+                    <div role="button">
+                        <Link to="/auth">Get Started</Link>
+                    </div>
+                </div>
+                <div>
+                    <img src="/mobile.png" alt="StreamMate app" />
+                </div>
+            </div>
+        </div>
+    )
 }
