@@ -4,7 +4,7 @@ import { Server } from "socket.io";
 import cors from "cors";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import { connectTosocket } from "./controllers/socketManger.js";
+import { connectToSocket } from "./controllers/socketManger.js";
 import userRoutes from "./routes/user.routes.js";
 
 
@@ -14,7 +14,7 @@ dotenv.config();
 
 const app = express();
 const server = createServer(app);
-const io = connectTosocket(server);
+const io = connectToSocket(server);
 
 // Middleware
 app.use(cors());
