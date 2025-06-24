@@ -10,44 +10,31 @@ export default function LandingPage() {
         <div className='landingPageContainer'>
             <nav>
                 <div className='navHeader'>
-                    <h2>Apna Video Call</h2>
+                    <h2>STREAMMATE</h2>
                 </div>
                 <div className='navlist'>
-                    <p onClick={() => {
-                        router("/aljk23")
-                    }}>Join as Guest</p>
-                    <p onClick={() => {
-                        router("/auth")
-
-                    }}>Register</p>
-                    <div onClick={() => {
-                        router("/auth")
-
-                    }} role='button'>
+                    <p onClick={() => router("/aljk23")}>Join as Guest</p>
+                    <p onClick={() => router("/auth")}>Register</p>
+                    <div onClick={() => router("/auth")} role='button'>
                         <p>Login</p>
                     </div>
                 </div>
             </nav>
 
-
             <div className="landingMainContainer">
                 <div>
-                    <h1><span style={{ color: "#FF9839" }}>Connect</span> with your loved Ones</h1>
-
-                    <p>Cover a distance by Apna Video Call</p>
+                    <h1>
+                        <span style={{ color: "#FF9839" }}>Connect</span> and Smile Together
+                    </h1>
+                    <p>Bringing hearts closer, one call at a time.</p>
                     <div role='button'>
                         <Link to={"/auth"}>Get Started</Link>
                     </div>
                 </div>
                 <div>
-
-                    <img src="/mobile.png" alt="" />
-
+                    <img src="/mobile.png" alt="Mobile illustration" />
                 </div>
             </div>
-
-
-
         </div>
     )
 }
