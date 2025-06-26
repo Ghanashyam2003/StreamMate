@@ -1,49 +1,48 @@
 import express from "express";
 import { createServer } from "node:http";
-import { Server } from "socket.io";
-import cors from "cors";
 import mongoose from "mongoose";
+import cors from "cors";
 import dotenv from "dotenv";
-import { connectToSocket } from "./controllers/socketManger.js";
+
+import { connectToSocket } from "./controllers/socketManager.js";
 import userRoutes from "./routes/user.routes.js";
 
-
-
-// Load environment variables
+// Load .env variables
 dotenv.config();
 
 const app = express();
 const server = createServer(app);
+
+// Socket.io setup
 const io = connectToSocket(server);
 
-// Middleware
+// Express configuration
+app.set("port", process.env.PORT || 8000);
+
 app.use(cors());
-app.use(express.json({limit: '50mb'}));
-app.use(express.urlencoded({ extended: true, limit: '50mb' }));
-app.use("/api/v1/user", userRoutes);
+app.use(express.json({ limit: "40kb" }));
+app.use(express.urlencoded({ extended: true, limit: "40kb" }));
 
+// Routes
+app.use("/api/v1/users", userRoutes);
 
-
-
-// Environment-based configuration
-const PORT = process.env.PORT || 3000;
-const MONGO_URI = process.env.MONGO_URI || "mongodb://localhost:27017/mydatabase";
-
-
-// Start server and connect to MongoDB
+// MongoDB Connection & Server Start
 const start = async () => {
   try {
-    await mongoose.connect(MONGO_URI, {
+    const db = await mongoose.connect(process.env.MONGODB_URI, {
+      dbName: "streammate",   
       useNewUrlParser: true,
-      useUnifiedTopology: true,
+      useUnifiedTopology: true
     });
-    console.log(`MongoDB connected successfully to ${mongoose.connection.host}`);
 
-    server.listen(PORT, () => {
-      console.log(` Server is running on port ${PORT}`);
+    console.log(`✅ MongoDB Connected: ${db.connection.host}`);
+
+    server.listen(app.get("port"), () => {
+      console.log(`🚀 Server running on port ${app.get("port")}`);
     });
   } catch (err) {
-    console.error(" MongoDB connection error:", err);
+    console.error("❌ MongoDB connection failed:", err.message);
+    process.exit(1); // Exit with failure
   }
 };
 

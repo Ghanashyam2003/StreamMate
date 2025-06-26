@@ -1,40 +1,73 @@
-import React from 'react'
-import "../App.css"
-import { Link, useNavigate } from 'react-router-dom'
-export default function LandingPage() {
+import React, { useContext, useState } from "react";
+import withAuth from "../utils/withAuth";
+import { useNavigate } from "react-router-dom";
+import "../App.css";
+import { Button, IconButton, TextField } from "@mui/material";
+import RestoreIcon from "@mui/icons-material/Restore";
+import { AuthContext } from "../contexts/AuthContext";
 
+function HomeComponent() {
+  let navigate = useNavigate();
+  const [meetingCode, setMeetingCode] = useState("");
 
-    const router = useNavigate();
+  const { addToUserHistory } = useContext(AuthContext);
+  let handleJoinVideoCall = async () => {
+    await addToUserHistory(meetingCode);
+    navigate(`/${meetingCode}`);
+  };
 
-    return (
-        <div className='landingPageContainer'>
-            <nav>
-                <div className='navHeader'>
-                    <h2>STREAMMATE</h2>
-                </div>
-                <div className='navlist'>
-                    <p onClick={() => router("/aljk23")}>Join as Guest</p>
-                    <p onClick={() => router("/auth")}>Register</p>
-                    <div onClick={() => router("/auth")} role='button'>
-                        <p>Login</p>
-                    </div>
-                </div>
-            </nav>
-
-            <div className="landingMainContainer">
-                <div>
-                    <h1>
-                        <span style={{ color: "#FF9839" }}>Connect</span> and Smile Together
-                    </h1>
-                    <p>Bringing hearts closer, one call at a time.</p>
-                    <div role='button'>
-                        <Link to={"/auth"}>Get Started</Link>
-                    </div>
-                </div>
-                <div>
-                    <img src="/mobile.png" alt="Mobile illustration" />
-                </div>
-            </div>
+  return (
+    <>
+      <div className="navBar">
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <h2>Apna Video Call</h2>
         </div>
-    )
+
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <IconButton
+            onClick={() => {
+              navigate("/history");
+            }}
+          >
+            <RestoreIcon />
+          </IconButton>
+          <p>History</p>
+
+          <Button
+            onClick={() => {
+              localStorage.removeItem("token");
+              navigate("/auth");
+            }}
+          >
+            Logout
+          </Button>
+        </div>
+      </div>
+
+      <div className="meetContainer">
+        <div className="leftPanel">
+          <div>
+            <h2>Providing Quality Video Call Just Like Quality Education</h2>
+
+            <div style={{ display: "flex", gap: "10px" }}>
+              <TextField
+                onChange={(e) => setMeetingCode(e.target.value)}
+                id="outlined-basic"
+                label="Meeting Code"
+                variant="outlined"
+              />
+              <Button onClick={handleJoinVideoCall} variant="contained">
+                Join
+              </Button>
+            </div>
+          </div>
+        </div>
+        <div className="rightPanel">
+          <img srcSet="/logo3.png" alt="" />
+        </div>
+      </div>
+    </>
+  );
 }
+
+export default withAuth(HomeComponent);

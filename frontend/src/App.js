@@ -6,6 +6,8 @@ import { AuthProvider } from './contexts/AuthContext';
 import VideoMeetComponent from './pages/VideoMeet';
 import HomeComponent from './pages/home';
 import History from './pages/history';
+import Room from './Room';
+
 
 function App() {
   return (
@@ -25,6 +27,8 @@ function App() {
             <Route path='/home's element={<HomeComponent />} />
             <Route path='/history' element={<History />} />
             <Route path='/:url' element={<VideoMeetComponent />} />
+             <Route path="/room/:roomID" element={<Room />} />
+
           </Routes>
         </AuthProvider>
 
